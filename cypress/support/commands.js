@@ -23,3 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import { faker } from '@faker-js/faker';
+
+Cypress.Commands.add('registerRandomUser', (isAdmin = false) => {
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    const nome = faker.person.fullName();
+    cy.request('POST', `${Cypress.env('apiUrl')}/usuarios`, {
+        nome,
+        email,
+        password,
+        administrador: isAdmin,
+    }).as('response');
+    Cypress.env('userEmail', email);
+    Cypress.env('userPassword', password);
+    Cypress.env('userName', nome);
+    Cypress.env('userIsAdmin', isAdmin);
+});
