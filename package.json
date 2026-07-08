@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "cypress run --browser chrome",
+    "open": "cypress open"
+  },
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^26.0.0"
+  },
+  "allowScripts": {
+    "cypress@15.18.1": true,
+    "esbuild@0.28.1": true
+  }
+}
