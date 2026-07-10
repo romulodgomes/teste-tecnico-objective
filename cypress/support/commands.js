@@ -40,9 +40,60 @@ Cypress.Commands.add('registerRandomUser', (isAdmin = 'false', email) => {
             administrador: isAdmin,
         },
         failOnStatusCode: false,
-    }).as('response');
+    }).as('response').then(response => {
+        Cypress.env('userId', response.body._id);
+    });
     Cypress.env('userEmail', emailUser);
     Cypress.env('userPassword', password);
     Cypress.env('userName', nome);
     Cypress.env('userIsAdmin', isAdmin);
+});
+
+Cypress.Commands.add('createRandomProduct', () => {
+    cy.request({
+        method: 'POST', url: `${Cypress.env('apiUrl')}/produtos`,
+        headers: {
+            authorization: Cypress.env('authToken'),
+        },
+        body: {
+            nome: faker.commerce.productName(),
+            preco: faker.number.int({ min: 10, max: 300 }),
+            descricao: faker.commerce.productDescription(),
+            quantidade: faker.number.int({ min: 1, max: 100 }),
+        }
+    }).then(response => {
+        Cypress.env('productId', response.body._id);
+    });
+});
+
+Cypress.Commands.add('apiLogin', () => {
+    cy.request('POST', `${Cypress.env('apiUrl')}/login`, {
+        email: Cypress.env('userEmail'),
+        password: Cypress.env('userPassword'),
+    }).then(response => {
+        Cypress.env('authToken', response.body.authorization);
+    });
+});
+
+Cypress.Commands.add('createCart', () => {
+    cy.apiLogin().then(() => {
+        cy.createRandomProduct().then(() => {
+            console.log(Cypress.env('authToken'));
+            cy.request({
+                method: 'POST',
+                headers: {
+                    authorization: Cypress.env('authToken'),
+                },
+                url: `${Cypress.env('apiUrl')}/carrinhos`,
+                body: {
+                    produtos: [
+                        {
+                            idProduto: Cypress.env('productId'),
+                            quantidade: 1
+                        }
+                    ]
+                },
+            }).as('response');
+        });
+    });
 });
