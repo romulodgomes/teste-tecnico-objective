@@ -26,17 +26,22 @@
 
 import { faker } from '@faker-js/faker';
 
-Cypress.Commands.add('registerRandomUser', (isAdmin = false) => {
-    const email = faker.internet.email();
+Cypress.Commands.add('registerRandomUser', (isAdmin = 'false', email) => {
+    const emailUser = email || faker.internet.email();
     const password = faker.internet.password();
     const nome = faker.person.fullName();
-    cy.request('POST', `${Cypress.env('apiUrl')}/usuarios`, {
-        nome,
-        email,
-        password,
-        administrador: isAdmin,
+    cy.request({
+        method: 'POST',
+        url: `${Cypress.env('apiUrl')}/usuarios`,
+        body: {
+            nome,
+            email: emailUser,
+            password,
+            administrador: isAdmin,
+        },
+        failOnStatusCode: false,
     }).as('response');
-    Cypress.env('userEmail', email);
+    Cypress.env('userEmail', emailUser);
     Cypress.env('userPassword', password);
     Cypress.env('userName', nome);
     Cypress.env('userIsAdmin', isAdmin);
