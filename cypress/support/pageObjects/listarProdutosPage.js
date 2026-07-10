@@ -13,4 +13,22 @@ export default class ListarProdutosPage {
             cy.get('td').eq(4).should('have.text', 'C:\\fakepath\\test-img.png');
         });
     }
+
+    verifyProdutoDeleted( nome ) {
+        cy.get(this.produtosTable).should('not.contain', nome);
+    }
+
+    clickEditarButton( nome ) {
+        const linhaProduto = cy.get(this.produtosTable).contains(nome).parent('tr');
+        linhaProduto.within(() => {
+            cy.get('button').contains('Editar').click();
+        });
+    }
+
+    clickExcluirButton( nome ) {
+        const linhaProduto = cy.get(this.produtosTable).contains(nome).parent('tr');
+        linhaProduto.within(() => {
+            cy.get('button').contains('Excluir').click();
+        });
+    }
 }

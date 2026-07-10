@@ -8,6 +8,7 @@ export default class CadastrarProdutosPage {
         this.quantidadeInput = '[data-testid="quantity"]'
         this.imagemInput = '[data-testid="imagem"]';
         this.cadastrarButton = '[data-testid="cadastarProdutos"]';
+        this.salvarButton = '[data-testid="salvarProdutos"]';
         this.defaultImage = 'cypress/assets/test-img.png';
     }
 
@@ -32,5 +33,9 @@ export default class CadastrarProdutosPage {
 
     clickCadastrarButton() {
         cy.get(this.cadastrarButton).click();
+    }
+
+    clickSalvarButton() {
+        cy.get(this.salvarButton).click();
     }
 }
