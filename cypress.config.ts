@@ -10,6 +10,8 @@ export default defineConfig({
   e2e: {
     specPattern: "**/*.feature",
     baseUrl: 'https://front.serverest.dev',
+    defaultCommandTimeout: 10000,
+    pageLoadTimeout: 10000,
     async setupNodeEvents(
       on: Cypress.PluginEvents,
       config: Cypress.PluginConfigOptions
