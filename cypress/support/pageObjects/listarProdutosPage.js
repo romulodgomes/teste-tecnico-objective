@@ -1,16 +1,17 @@
 export default class ListarProdutosPage {
     constructor() {
         this.produtosTable = 'table tr';
+        this.defaultImagePrefix = 'C:\\fakepath\\';
     }
 
-    verifyProdutoCreated( nome, preco, descricao, quantidade ) {
+    verifyProdutoCreated( nome, preco, descricao, quantidade, imagem ) {
         const linhaProduto = cy.get(this.produtosTable).contains(nome).parent('tr');
         linhaProduto.within(() => {
             cy.get('td').eq(0).should('have.text', nome);
             cy.get('td').eq(1).should('have.text', preco);
             cy.get('td').eq(2).should('have.text', descricao);
             cy.get('td').eq(3).should('have.text', quantidade);
-            cy.get('td').eq(4).should('have.text', 'C:\\fakepath\\test-img.png');
+            cy.get('td').eq(4).should('have.text', this.defaultImagePrefix + imagem.split('/').pop());
         });
     }
 
