@@ -3,7 +3,7 @@ name: Continuous Integration
 on: [pull_request, push]
 
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -14,5 +14,19 @@ jobs:
           node-version: 26
       - name: Install dependencies
         run: npm install
-      - name: Run tests
-        run: npm run test
+      - name: Run API tests
+        run: npm run test:api
+      - name: Upload API test report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-report
+          path: cypress/reports/api-report.html
+      - name: Run E2E tests
+        run: npm run test:e2e
+      - name: Upload E2E test report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: cypress/reports/e2e-report.html
