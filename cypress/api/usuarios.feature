@@ -1,5 +1,8 @@
 # language: pt
 Funcionalidade: Usuários
+
+  Testes de API relacionados ao recurso /usuarios
+
   Cenário: Criar usuário com sucesso
     Quando o usuário faz uma requisição de criação de usuário
     Então a api responde com status 201 e mensagem "Cadastro realizado com sucesso"
