@@ -1,6 +1,8 @@
 {
   "scripts": {
     "test": "cypress run --browser chrome",
+    "test:api": "cypress run --spec cypress/api/**/*.feature --env htmlOutput=cypress/reports/api-report.html",
+    "test:e2e": "cypress run --browser chrome --spec cypress/e2e/**/*.feature --env htmlOutput=cypress/reports/e2e-report.html",
     "open": "cypress open"
   },
   "dependencies": {
@@ -15,6 +17,10 @@
     "esbuild@0.28.1": true
   },
   "cypress-cucumber-preprocessor": {
-    "stepDefinitions": "cypress/support/stepDefinitions/**/*.{js,ts}"
+    "stepDefinitions": "cypress/support/stepDefinitions/**/*.{js,ts}",
+    "html": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-report.html"
+    }
   }
 }
