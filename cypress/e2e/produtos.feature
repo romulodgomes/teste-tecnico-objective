@@ -1,6 +1,8 @@
 # language: pt
 Funcionalidade: Produtos
 
+  Testes E2E relacionados a manutenção de produtos por um administrador
+
   Contexto:
     Dado que existe um usuário administrador
 
